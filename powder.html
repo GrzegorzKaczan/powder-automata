@@ -6,6 +6,11 @@
  </head>
  <body>
     <canvas id="canvas" width="500" height="500" style="background: black;"></canvas>
+    <div>
+        <p>mouse left click for sand</p>
+        <p>mouse right click for water</p>
+        <p>mouse middle click for fire (on sand)</p>
+    </div>
     <script src="definitions.js"></script>
     <script src="init.js"></script>
     <script src="mouse.js"></script>
@@ -14,7 +19,11 @@
     <script src="stages/draw.js"></script>
     <script type="application/javascript">
 
-        arr[20][20][1] = Types.SAND;
+        arr[200][200][1] = Types.SAND;
+        arr[255][224][1] = Types.SAND;
+        arr[200][220][1] = Types.SAND;
+        arr[230][200][1] = Types.SAND;
+        arr[211][215][1] = Types.SAND;
 
         function update() {
             resetState();
