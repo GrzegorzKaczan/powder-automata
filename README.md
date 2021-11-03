@@ -1,3 +1,3 @@
 # powder-automata
 
-<a href="https://github.com/github_username/repo_name"><strong>Live</strong></a>
+<a href="https://htmlpreview.github.io/?https://github.com/GrzegorzKaczan/powder-automata/blob/main/powder.html"><strong>Live demo</strong></a>
