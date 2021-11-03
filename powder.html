@@ -6,7 +6,7 @@
  </head>
  <body>
     
-    <canvas id="canvas" width="500" height="500" style="background: black;"></canvas>
+    <canvas id="canvas" width="520" height="520" style="background: black;"></canvas>
     <div>
         </br>
         <b>cellular automata</b> </br>(simulating 250k grains at once)
@@ -24,11 +24,53 @@
     <script src="stages/draw.js"></script>
     <script type="application/javascript">
 
-        arr[200][200][1] = Types.SAND;
-        arr[255][224][1] = Types.SAND;
-        arr[200][220][1] = Types.SAND;
-        arr[230][200][1] = Types.SAND;
-        arr[211][215][1] = Types.SAND;
+        arr[80][100][1] = Types.SAND;
+        arr[100][100][1] = Types.SAND;
+        arr[80][120][1] = Types.SAND;
+        arr[80][140][1] = Types.SAND;
+        arr[80][160][1] = Types.SAND;
+        arr[80][160][1] = Types.SAND;
+        arr[100][160][1] = Types.SAND;
+
+        arr[170][100][1] = Types.SAND;
+        arr[170][120][1] = Types.SAND;
+        arr[170][140][1] = Types.SAND;
+        arr[170][160][1] = Types.SAND;
+        arr[190][160][1] = Types.SAND;
+        arr[210][160][1] = Types.SAND;
+
+        arr[260][100][1] = Types.SAND;
+        arr[260][120][1] = Types.SAND;
+        arr[260][140][1] = Types.SAND;
+        arr[260][160][1] = Types.SAND;
+
+        arr[310][100][1] = Types.SAND;
+        arr[330][100][1] = Types.SAND;
+        arr[310][120][1] = Types.SAND;
+        arr[310][140][1] = Types.SAND;
+        arr[310][160][1] = Types.SAND;
+        arr[310][160][1] = Types.SAND;
+        arr[330][160][1] = Types.SAND;
+
+        arr[380][100][1] = Types.SAND;
+        arr[380][120][1] = Types.SAND;
+        arr[380][140][1] = Types.SAND;
+        arr[380][160][1] = Types.SAND;
+        arr[410][160][1] = Types.SAND;
+        arr[390][140][1] = Types.SAND;
+        arr[410][100][1] = Types.SAND;
+        arr[390][120][1] = Types.SAND;
+        
+        for (let i = 3; i < size - 3; i++) {
+            for (let j = 3; j < size - 3; j++) {
+                if (arr[i][j][1] === Types.SAND) {
+                    arr[i-1][j-1][1] = Types.SAND;
+                    arr[i-1][j][1] = Types.SAND;
+                    arr[i][j - 1][1] = Types.SAND;
+                }
+            }   
+        }
+        
 
         function update() {
             resetState();
@@ -40,7 +82,9 @@
         }
 
         // physics loop
-        setInterval(update, 1);
+        setTimeout(function() {
+            setInterval(update, 1)
+        }, 1000);
 
         // paint loop
         setInterval(repaint, 1);
