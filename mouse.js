@@ -35,8 +35,8 @@ document.body.addEventListener('mousedown', function(e) {
     for (let i = x; i < x + 32; i++) {
       for (let j = y; j < y + 32; j++) {
         arr[i + 
-          Math.floor(Math.random()*53)][j+ 
-            Math.floor(Math.random()*53)][1] = buttons[e.buttons];
+          Math.floor(Math.random()*33)][j+ 
+            Math.floor(Math.random()*33)][1] = buttons[e.buttons];
       }
   }
   }
