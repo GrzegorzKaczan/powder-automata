@@ -49,6 +49,12 @@ window.addEventListener('contextmenu', function (e) {
 canvas.addEventListener('mouseup', function(e) {
   pressed = false;
 });
+canvas.addEventListener('dblclick', function(e) {
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left
+  const y = e.clientY - rect.top
+  arr[x][y][1] = Types.FIRE;
+});
 
 
 canvas.addEventListener('mousemove', function(e) {
