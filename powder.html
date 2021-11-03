@@ -5,167 +5,32 @@
   
  </head>
  <body>
-   <canvas id="canvas" width="1000" height="1000" style="background: black;"></canvas>
-   <script type="application/javascript">
-   
-    const size = 1000;
+    <canvas id="canvas" width="500" height="500" style="background: black;"></canvas>
+    <script src="definitions.js"></script>
+    <script src="init.js"></script>
+    <script src="mouse.js"></script>
+    <script src="stages/resetState.js"></script>
+    <script src="stages/physics.js"></script>
+    <script src="stages/draw.js"></script>
+    <script type="application/javascript">
 
-    const Types = {
-        VOID: 0,
-        SAND: 1,
-        WATER: 2
-    }
+        arr[20][20][1] = Types.SAND;
 
-    const colors = {
-        [Types.VOID]:   [0, 0, 0],
-        [Types.SAND]:   [255, 255, 0],
-        [Types.WATER]:  [0, 0, 255],
-    }
-
-    class Pixel {
-        constructor(x, y, type, painted = false) {
-            this.x = x;
-            this.y = y;
-            this.type = type;
-            this.painted = painted;
-            this.color = colors[type];
+        function update() {
+            resetState();
+            physics();
         }
 
-        fns = {
-            [Types.VOID]: function(currentPixel, targetPixel) {}, // noop
-            [Types.SAND]: function(pixel) {},
-            [Types.WATER]: function(pixel) {}
+        function repaint() {
+            draw();
         }
 
-        calc(targetPixel) {
-            this.fns[targetPixel.type](this, targetPixel);
-            this.painted = true;
-        }
-    }
+        // physics loop
+        setInterval(update, 1);
 
-    class SandPixel extends Pixel {
-        fns = {
-            [Types.VOID]: function(currentPixel, targetPixel) {
-                // replace empty pixel with current
-                const dx = currentPixel.x;
-                const dy = currentPixel.y;
-                arr[targetPixel.x][targetPixel.y] = new SandPixel(dx, dy, Types.SAND, true);
-                arr[dx][dy] = new Pixel(dx, dy, Types.VOID, true);
-            },
-            [Types.SAND]: function(pixel) {
-                // nothing or bounce of
-            },
-            [Types.WATER]: function(pixel) {
-                // replace water pixel with current
-            }
-        }
-    }
+        // paint loop
+        setInterval(repaint, 1);
 
-    // const pixelFactory = function(color) {
-    //     return  {
-    //         x: -1,
-    //         y: -1,
-    //         color: color,
-    //         painted: false,
-    //         empty: function(pixel) {
-    //             // replace empty pixel with current
-    //         },
-    //         sand: function(pixel) {
-    //             // nothing or bounce of
-    //         },
-    //         water: function(pixel) {
-    //             // replace water pixel with current
-    //         }
-    //     }
-    // }
-
-    let arr = [];
-    for (let i = 0; i < size; i++) {
-        arr[i] = [];
-        for (let j = 0; j < size; j++) {
-            arr[i][j] = [];
-            arr[i][j][0] = false;  // painted
-            arr[i][j][1] = 0;      // type
-        }   
-    }
-
-
-    function getCursorPosition(canvas, event, pressed) {
-        const rect = canvas.getBoundingClientRect()
-        const x = event.clientX - rect.left
-        const y = event.clientY - rect.top
-
-        if (pressed) {
-            console.log("x: " + x + " y: " + y);
-
-            for (let i = 0; i < 10; i++) {
-                for (let j = 0; j < 10; j++) {
-                    arr[x + i*j][y - j+i][1] = Types.SAND;
-                }
-            }
-            
-        }
-       
-    }
-
-
-    // 1
-    arr[100][100][1] = Types.SAND;  // sand
-
-    var canvas = document.getElementById('canvas');
-    var ctx = canvas.getContext('2d');
-
-    let pressed = false;
-    canvas.addEventListener('mousedown', function(e) {
-        pressed = true;
-    });
-    canvas.addEventListener('mouseup', function(e) {
-        pressed = false;
-    });
-
-    canvas.addEventListener('mousemove', function(e) {
-        getCursorPosition(canvas, e, pressed)
-    });
-
-    var canvasWidth = canvas.width;
-    var canvasHeight = canvas.height;
-
-    const id = ctx.createImageData(canvasWidth, canvasHeight);
-
-    function draw() {
-      
-
-        // reset
-        for (let i = 0; i < size; i++) {
-            for (let j = 0; j < size; j++) {
-                arr[i][j][0] = false;
-            }   
-        }
-        // draw matrix
-       
-        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-        
-        var imagePixels = id.data;
-
-        
-        for (let x = 0; x < size; x++) {
-            for (let y = 0; y < size; y++) {
-                var offset = (y * id.width + x) * 4;
-                const color = colors[arr[x][y][1]];
-                imagePixels[offset] =     color[0];    // R
-                imagePixels[offset + 1] = color[1];      // G
-                imagePixels[offset + 2] = color[2];      // B
-                imagePixels[offset + 3] = 255;           // A
-            }   
-        }
-
-        ctx.putImageData(id, 0, 0);
-
-        //window.requestAnimationFrame(draw);
-    }
-
-   // window.requestAnimationFrame(draw);
-    setInterval(draw, 1);
-  </script>
+    </script>
  </body>
 </html>
